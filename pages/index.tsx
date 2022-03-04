@@ -41,25 +41,33 @@ export function bfs(
 
 export default function Home() {
   const [tree, setTree] = useState<RawNodeDatum | RawNodeDatum[]>({
-    name: "Root",
+    current_biomarker_check: "CATR",
     attributes: {
       id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f",
+      name: 'root'
     },
+    causes: [1],
+    recommendations: [1],
     children: [
-      {
-        name: "Root 1.1",
-        attributes: {
-          id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f2",
-        },
-        children: [],
-      },
-      {
-        name: "Root 1.2",
-        attributes: {
-          id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f3",
-        },
-        children: [],
-      },
+      // {
+      //   current_biomarker_check: "GLUCOSE",
+      //   attributes: {
+      //     id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f2",
+      //     name: 'above_reference_path'
+      //   },
+      //   causes: [],
+      //   recommendations: [],
+      //   children: [],
+      // },
+      // {
+      //   current_biomarker_check: "Root 1.2",
+      //   attributes: {
+      //     id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f3",
+      //   },
+      //   causes: [],
+      //   recommendations: [],
+      //   children: [],
+      // },
     ],
   });
   const [node, setNode] = useState<TreeNodeDatum | undefined>();
@@ -70,11 +78,12 @@ export default function Home() {
     setNode(datum);
   };
 
-  const handleSubmit = (familyMemberName: string) => {
+  const handleSubmit = (familyMemberName: string, pathType: string) => {
     const newTree = bfs(node.attributes?.id, tree, {
-      name: familyMemberName,
+      current_biomarker_check: familyMemberName,
       attributes: {
         id: v4(),
+        name: pathType
       },
       children: [],
     });
@@ -96,11 +105,16 @@ export default function Home() {
       <g>
         <circle r="15" fill={"#777"} onClick={() => click(nodeDatum)} />
         <text fill="black" strokeWidth="0.5" x="20" y="-5">
-          {nodeDatum.name}
+          {nodeDatum.current_biomarker_check}
+        </text>
+        <text fill="black" strokeWidth="0.5" x="20" y="15">
+          {nodeDatum.attributes.name}
         </text>
       </g>
     );
   };
+
+  console.log(`tree`, tree)
 
   return (
     <Stack direction="row" spacing="md">
@@ -118,7 +132,7 @@ export default function Home() {
           }
         />
         <NodeModal
-          onSubmit={(familyMemberName) => handleSubmit(familyMemberName)}
+          onSubmit={(familyMemberName, pathType) => handleSubmit(familyMemberName, pathType)}
           onClose={close}
           isOpen={Boolean(node)}
         />
