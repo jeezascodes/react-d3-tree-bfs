@@ -1,7 +1,7 @@
 export const contactDataTypeOptions = [
-  { value: 0, label: 'Select' },
+  { value: 0, label: 'None' },
   { value: 1, label: 'Glucose' },
-  { value: 2, label: 'HbA1c (glycated hemoglobin)' },
+  { value: 2, label: 'HbA1c' },
   { value: 3, label: 'Insulin' },
   { value: 4, label: 'UREA NITROGEN ' },
   { value: 5, label: 'Creatinine' },
@@ -124,9 +124,9 @@ export const allRecommendations = [
 ];
 
 export const PATH_TYPES = [
-  { value: 'low_path_id', label: 'low_path_id' },
-  { value: 'below_reference_path_id', label: 'below_reference_path_id' },
-  { value: 'ideal_path_id', label: 'ideal_path_id' },
-  { value: 'above_reference_path_id', label: 'above_reference_path_id' },
-  { value: 'high_path_id', label: 'high_path_id' },
+  { value: 'low', label: 'low' },
+  { value: 'below_reference', label: 'below_reference' },
+  { value: 'ideal', label: 'ideal' },
+  { value: 'above_reference', label: 'above_reference' },
+  { value: 'high', label: 'high' },
 ];

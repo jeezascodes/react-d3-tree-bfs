@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.biomarkerName {
+  color: red;
+}
+
+.pathType {
+  font-size: 0.7rem;
+}

@@ -20,14 +20,14 @@ type Props = {
 };
 
 const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
-  const [pathType, setPathType] = useState({});
+  const [pathType, setPathType] = useState("");
   const [contactDataType, setContactDataType] = useState(null)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add family member</ModalHeader>
+        <ModalHeader>Add next step</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {/* <FormControl>

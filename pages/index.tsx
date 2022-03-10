@@ -106,10 +106,10 @@ export default function Home() {
     return (
       <g>
         <circle r="15" fill={"#777"} onClick={() => click(nodeDatum)} />
-        <text fill="black" strokeWidth="0.5" x="20" y="-5">
-          {biomarker_name == 'Select' ? '' : biomarker_name}
+        <text fill="black" strokeWidth="0.5" x="20" y="-5" className="biomarkerName">
+          {biomarker_name == 'None' ? '' : biomarker_name}
         </text>
-        <text fill="black" strokeWidth="0.5" x="20" y="15">
+        <text fill="black" strokeWidth="0.5" x="20" y="15" className="pathType">
           {nodeDatum.attributes.name}
         </text>
       </g>
