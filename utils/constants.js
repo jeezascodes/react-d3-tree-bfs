@@ -97,6 +97,7 @@ export const contactDataTypeOptions = [
 ];
 
 export const allCauses = [
+  { value: 0, label: 'None' },
   { value: 1, label: 'unbalanced diet' },
   { value: 2, label: 'fats insufficiency' },
   { value: 3, label: 'fats deficit' },

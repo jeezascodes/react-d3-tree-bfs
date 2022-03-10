@@ -8,7 +8,7 @@ import {
   TreeNodeDatum,
 } from "react-d3-tree/lib/types/common";
 import { v4 } from "uuid";
-import {contactDataTypeOptions} from '../utils/constants'
+import {contactDataTypeOptions, allCauses} from '../utils/constants'
 
 const Tree = dynamic(() => import("react-d3-tree"), {
   ssr: false,
@@ -47,7 +47,7 @@ export default function Home() {
       id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f",
       name: 'root'
     },
-    causes: [1],
+    causes: [0],
     recommendations: [1],
     children: [
       // {
@@ -79,13 +79,14 @@ export default function Home() {
     setNode(datum);
   };
 
-  const handleSubmit = (familyMemberName: any, pathType: any) => {
+  const handleSubmit = (familyMemberName: any, pathType: any, cause: any) => {
     const newTree = bfs(node.attributes?.id, tree, {
       current_biomarker_check: familyMemberName?.value || 0,
       attributes: {
         id: v4(),
         name: pathType
       },
+      causes: cause,
       children: [],
     });
 
@@ -102,6 +103,9 @@ export default function Home() {
   ) => {
     const { nodeDatum } = customProps;
     const biomarker_name = contactDataTypeOptions?.filter(item => item.value == nodeDatum.current_biomarker_check)[0].label
+    const cause_name = allCauses?.filter(item => item.value == nodeDatum.causes)[0]?.label
+
+    console.log(`nodeDatum.causes`, nodeDatum.causes)
 
     return (
       <g>
@@ -109,7 +113,10 @@ export default function Home() {
         <text fill="black" strokeWidth="0.5" x="20" y="-5" className="biomarkerName">
           {biomarker_name == 'None' ? '' : biomarker_name}
         </text>
-        <text fill="black" strokeWidth="0.5" x="20" y="15" className="pathType">
+        <text fill="black" strokeWidth="0.5" x="20" y="15" className="biomarkerName">
+          {cause_name == 'None' ? '' : cause_name}
+        </text>
+        <text fill="black" strokeWidth="0.5" x="20" y="30" className="pathType">
           {nodeDatum.attributes.name}
         </text>
       </g>
@@ -134,7 +141,7 @@ export default function Home() {
           }
         />
         <NodeModal
-          onSubmit={(familyMemberName, pathType) => handleSubmit(familyMemberName, pathType)}
+          onSubmit={(familyMemberName, pathType, cause) => handleSubmit(familyMemberName, pathType, cause)}
           onClose={close}
           isOpen={Boolean(node)}
         />
