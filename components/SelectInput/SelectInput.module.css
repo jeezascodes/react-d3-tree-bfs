@@ -1,0 +1,35 @@
+.select > div:first-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  pointer-events: all;
+  opacity: 1;
+  border: none;
+  height: fit-content;
+  font-size: 0.875rem;
+  font-family: EuclidCircular, Arial;
+  font-weight: 600;
+  box-shadow: none;
+  border-radius: 0.25rem;
+  width: 100%;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1.5rem;
+  border-color: transparent;
+  color: rgba(255, 255, 255, 0.88);
+  background-color: rgba(111, 76, 255, 0.08);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.select > div:first-of-type > div:first-of-type > div {
+  color: white;
+}
+
+.labelText {
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  display: block;
+  margin-top: 1.5rem;
+}

@@ -10,16 +10,18 @@ import {
 } from "@chakra-ui/modal";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
+import {contactDataTypeOptions, PATH_TYPES} from '../utils/constants'
+import SelectInput from './SelectInput/SelectInput'
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (txt: string, pathType: string) => void;
+  onSubmit: (txt: string, pathType: any) => void;
 };
 
 const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
-  const [txt, setTxt] = useState("");
-  const [pathType, setPathType] = useState("");
+  const [pathType, setPathType] = useState({});
+  const [contactDataType, setContactDataType] = useState(null)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -28,7 +30,7 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
         <ModalHeader>Add family member</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FormControl>
+          {/* <FormControl>
             <FormLabel>Name</FormLabel>
             <Input
               value={txt}
@@ -39,13 +41,26 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
               value={pathType}
               onChange={(event) => setPathType(event.target.value)}
             />
-          </FormControl>
+          </FormControl> */}
+          <SelectInput
+            name="Select path type"
+            value={pathType}
+            options={PATH_TYPES}
+            onChange={setPathType}
+          />
+          <SelectInput
+            name="Select biomarker to check"
+            value={contactDataType}
+            options={contactDataTypeOptions}
+            onChange={setContactDataType}
+          />
+
         </ModalBody>
         <ModalFooter>
           <Button
             color="blue.500"
             variant="solid"
-            onClick={() => onSubmit(txt, pathType)}
+            onClick={() => onSubmit(contactDataType, pathType.value)}
             disabled={!pathType}
           >
             Add

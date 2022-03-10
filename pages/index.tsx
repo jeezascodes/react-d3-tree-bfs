@@ -8,6 +8,7 @@ import {
   TreeNodeDatum,
 } from "react-d3-tree/lib/types/common";
 import { v4 } from "uuid";
+import {contactDataTypeOptions} from '../utils/constants'
 
 const Tree = dynamic(() => import("react-d3-tree"), {
   ssr: false,
@@ -41,7 +42,7 @@ export function bfs(
 
 export default function Home() {
   const [tree, setTree] = useState<RawNodeDatum | RawNodeDatum[]>({
-    current_biomarker_check: "CATR",
+    current_biomarker_check: 40,
     attributes: {
       id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f",
       name: 'root'
@@ -78,9 +79,9 @@ export default function Home() {
     setNode(datum);
   };
 
-  const handleSubmit = (familyMemberName: string, pathType: string) => {
+  const handleSubmit = (familyMemberName: any, pathType: any) => {
     const newTree = bfs(node.attributes?.id, tree, {
-      current_biomarker_check: familyMemberName,
+      current_biomarker_check: familyMemberName?.value || 0,
       attributes: {
         id: v4(),
         name: pathType
@@ -100,12 +101,13 @@ export default function Home() {
     click: (datum: TreeNodeDatum) => void
   ) => {
     const { nodeDatum } = customProps;
+    const biomarker_name = contactDataTypeOptions?.filter(item => item.value == nodeDatum.current_biomarker_check)[0].label
 
     return (
       <g>
         <circle r="15" fill={"#777"} onClick={() => click(nodeDatum)} />
         <text fill="black" strokeWidth="0.5" x="20" y="-5">
-          {nodeDatum.current_biomarker_check}
+          {biomarker_name == 'Select' ? '' : biomarker_name}
         </text>
         <text fill="black" strokeWidth="0.5" x="20" y="15">
           {nodeDatum.attributes.name}
