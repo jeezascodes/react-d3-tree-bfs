@@ -19,6 +19,14 @@ a {
   color: red;
 }
 
+.long_name {
+  font-size: 0.7rem;
+}
 .pathType {
   font-size: 0.7rem;
+  background-color: green;
+}
+
+.long {
+  font-size: 0.5rem;
 }

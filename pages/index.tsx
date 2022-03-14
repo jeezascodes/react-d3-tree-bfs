@@ -70,8 +70,11 @@ export default function Home() {
       //   children: [],
       // },
     ],
+    parent: 0
   });
   const [node, setNode] = useState<TreeNodeDatum | undefined>();
+  const [lastParent, setLastParent] = useState(40)
+  const [currentParent, setCurrentParent] = useState(40)
 
   const close = () => setNode(undefined);
 
@@ -80,6 +83,10 @@ export default function Home() {
   };
 
   const handleSubmit = (familyMemberName: any, pathType: any, cause: any) => {
+    setLastParent(currentParent)
+    if(familyMemberName?.value) {
+      setCurrentParent(familyMemberName?.value)
+    }
     const newTree = bfs(node.attributes?.id, tree, {
       current_biomarker_check: familyMemberName?.value || 0,
       attributes: {
@@ -88,6 +95,7 @@ export default function Home() {
       },
       causes: cause,
       children: [],
+      parent: node.current_biomarker_check
     });
 
     if (newTree) {
@@ -102,26 +110,31 @@ export default function Home() {
     click: (datum: TreeNodeDatum) => void
   ) => {
     const { nodeDatum } = customProps;
+    const last_parent_name = contactDataTypeOptions?.filter(item => item.value == nodeDatum.parent)[0]?.label
     const biomarker_name = contactDataTypeOptions?.filter(item => item.value == nodeDatum.current_biomarker_check)[0].label
     const cause_name = allCauses?.filter(item => item.value == nodeDatum.causes)[0]?.label
+    const path = nodeDatum.attributes.name
+    let textPosition = path == "below_reference" || path == "above_reference"  ? "-130" : "-120"
+
 
     return (
       <g>
         <circle r="15" fill={"#777"} onClick={() => click(nodeDatum)} />
-        <text fill="black" strokeWidth="0.5" x="20" y="-5" className="biomarkerName">
+        <text fill="black" strokeWidth="0.5" x="20" y="-5" className={`biomarkerName long_name`}>
           {biomarker_name == 'None' ? '' : biomarker_name}
         </text>
         <text fill="black" strokeWidth="0.5" x="20" y="15" className="biomarkerName">
           {cause_name == 'None' ? '' : cause_name}
         </text>
-        <text fill="black" strokeWidth="0.5" x="20" y="30" className="pathType">
+        <text fill="black" strokeWidth="0.5" x={textPosition} y="-10" className={`pathType long`}>
+          {`If ${last_parent_name} is:`}
+        </text>
+        <text fill="black" strokeWidth="0.5" x={textPosition} y="10" className="pathType">
           {nodeDatum.attributes.name}
         </text>
       </g>
     );
   };
-
-  console.log(`tree`, tree)
 
   return (
     <Stack direction="row" spacing="md">
@@ -134,6 +147,7 @@ export default function Home() {
             x: 200,
             y: 200,
           }}
+          nodeSize= {{ x: 340, y: 140 }}
           renderCustomNodeElement={(nodeInfo) =>
             renderRectSvgNode(nodeInfo, handleNodeClick)
           }

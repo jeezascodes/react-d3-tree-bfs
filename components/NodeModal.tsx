@@ -24,8 +24,6 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
   const [contactDataType, setContactDataType] = useState(null)
   const [cause, setCause] = useState("")
 
-  console.log(`cause`, cause)
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
