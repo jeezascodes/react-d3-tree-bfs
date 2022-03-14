@@ -73,9 +73,6 @@ export default function Home() {
     parent: 0
   });
   const [node, setNode] = useState<TreeNodeDatum | undefined>();
-  const [lastParent, setLastParent] = useState(40)
-  const [currentParent, setCurrentParent] = useState(40)
-
   const close = () => setNode(undefined);
 
   const handleNodeClick = (datum: TreeNodeDatum) => {
@@ -83,10 +80,6 @@ export default function Home() {
   };
 
   const handleSubmit = (familyMemberName: any, pathType: any, cause: any) => {
-    setLastParent(currentParent)
-    if(familyMemberName?.value) {
-      setCurrentParent(familyMemberName?.value)
-    }
     const newTree = bfs(node.attributes?.id, tree, {
       current_biomarker_check: familyMemberName?.value || 0,
       attributes: {
@@ -119,19 +112,19 @@ export default function Home() {
 
     return (
       <g>
-        <circle r="15" fill={"#777"} onClick={() => click(nodeDatum)} />
+        <circle r="15" fill={"green"} onClick={() => click(nodeDatum)} />
         <text fill="black" strokeWidth="0.5" x="20" y="-5" className={`biomarkerName long_name`}>
           {biomarker_name == 'None' ? '' : biomarker_name}
         </text>
         <text fill="black" strokeWidth="0.5" x="20" y="15" className="biomarkerName">
           {cause_name == 'None' ? '' : cause_name}
         </text>
-        <text fill="black" strokeWidth="0.5" x={textPosition} y="-10" className={`pathType long`}>
+        {last_parent_name != 'None' &&  <text fill="black" strokeWidth="0.5" x={textPosition} y="-10" className={`pathType long`}>
           {`If ${last_parent_name} is:`}
-        </text>
-        <text fill="black" strokeWidth="0.5" x={textPosition} y="10" className="pathType">
+        </text>}
+        {last_parent_name != 'None' && <text fill="black" strokeWidth="0.5" x={textPosition} y="10" className="pathType">
           {nodeDatum.attributes.name}
-        </text>
+        </text>}
       </g>
     );
   };
