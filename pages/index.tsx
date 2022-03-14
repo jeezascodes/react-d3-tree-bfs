@@ -105,8 +105,6 @@ export default function Home() {
     const biomarker_name = contactDataTypeOptions?.filter(item => item.value == nodeDatum.current_biomarker_check)[0].label
     const cause_name = allCauses?.filter(item => item.value == nodeDatum.causes)[0]?.label
 
-    console.log(`nodeDatum.causes`, nodeDatum.causes)
-
     return (
       <g>
         <circle r="15" fill={"#777"} onClick={() => click(nodeDatum)} />

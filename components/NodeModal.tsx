@@ -24,6 +24,8 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
   const [contactDataType, setContactDataType] = useState(null)
   const [cause, setCause] = useState("")
 
+  console.log(`cause`, cause)
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -31,29 +33,19 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
         <ModalHeader>Add next step</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {/* <FormControl>
-            <FormLabel>Name</FormLabel>
-            <Input
-              value={txt}
-              onChange={(event) => setTxt(event.target.value)}
-            />
-            <FormLabel>Path type</FormLabel>
-            <Input
-              value={pathType}
-              onChange={(event) => setPathType(event.target.value)}
-            />
-          </FormControl> */}
           <SelectInput
             name="Select path type"
             value={pathType}
             options={PATH_TYPES}
             onChange={setPathType}
+            isMulti={false}
           />
           <SelectInput
             name="Select biomarker to check"
             value={contactDataType}
             options={contactDataTypeOptions}
             onChange={setContactDataType}
+            isMulti={false}
           />
           <SelectInput
             name="Select causes"
@@ -67,7 +59,7 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
           <Button
             color="blue.500"
             variant="solid"
-            onClick={() => onSubmit(contactDataType, pathType.value, cause.value)}
+            onClick={() => onSubmit(contactDataType, pathType.value, cause)}
             disabled={!pathType}
           >
             Add
