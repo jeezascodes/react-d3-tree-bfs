@@ -43,33 +43,14 @@ export function bfs(
 export default function Home() {
   const [tree, setTree] = useState<RawNodeDatum | RawNodeDatum[]>({
     current_biomarker_check: 40,
+    current_question_check: null,
     attributes: {
       id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f",
       name: 'root'
     },
     causes: [0],
     recommendations: [1],
-    children: [
-      // {
-      //   current_biomarker_check: "GLUCOSE",
-      //   attributes: {
-      //     id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f2",
-      //     name: 'above_reference_path'
-      //   },
-      //   causes: [],
-      //   recommendations: [],
-      //   children: [],
-      // },
-      // {
-      //   current_biomarker_check: "Root 1.2",
-      //   attributes: {
-      //     id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f3",
-      //   },
-      //   causes: [],
-      //   recommendations: [],
-      //   children: [],
-      // },
-    ],
+    children: [],
     parent: 0
   });
   const [node, setNode] = useState<TreeNodeDatum | undefined>();
@@ -79,9 +60,10 @@ export default function Home() {
     setNode(datum);
   };
 
-  const handleSubmit = (familyMemberName: any, pathType: any, cause: any) => {
+  const handleSubmit = (familyMemberName: any, question: any, pathType: any, cause: any) => {
     const newTree = bfs(node.attributes?.id, tree, {
       current_biomarker_check: familyMemberName?.value || 0,
+      current_question_check: question,
       attributes: {
         id: v4(),
         name: pathType
@@ -129,6 +111,8 @@ export default function Home() {
     );
   };
 
+  console.log(`tree`, tree)
+
   return (
     <Stack direction="row" spacing="md">
       <Box w="100%" h="100vh">
@@ -146,9 +130,10 @@ export default function Home() {
           }
         />
         <NodeModal
-          onSubmit={(familyMemberName, pathType, cause) => handleSubmit(familyMemberName, pathType, cause)}
+          onSubmit={(familyMemberName, question, pathType, cause) => handleSubmit(familyMemberName,question, pathType, cause)}
           onClose={close}
           isOpen={Boolean(node)}
+          isQuestion={Boolean(node?.current_question_check)}
         />
       </Box>
     </Stack>

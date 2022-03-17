@@ -114,11 +114,6 @@ export const allCauses = [
   { value: 14, label: 'stress shock' },
 ];
 
-export const allQuestions = [
-  { value: 1, label: 'question 1' },
-  { value: 2, label: 'question 2' },
-];
-
 export const allRecommendations = [
   { value: 1, label: 'recommendation 1' },
   { value: 2, label: 'recommendation 2' },
@@ -130,4 +125,38 @@ export const PATH_TYPES = [
   { value: 'ideal', label: 'ideal' },
   { value: 'above_reference', label: 'above_reference' },
   { value: 'high', label: 'high' },
+];
+
+export const allQuestions = [
+  { value: 0, label: 'None' },
+  { value: 1, label: 'Little interest or pleasure in doing things' },
+  { value: 2, label: 'Feeling down, depressed, or hopeless' },
+  {
+    value: 3,
+    label: 'Trouble falling or staying asleep, or sleeping too much',
+  },
+  { value: 4, label: 'Feeling tired or having little energy' },
+  { value: 5, label: 'Poor appetite or overeating' },
+  {
+    value: 6,
+    label:
+      'Feeling bad about yourself or that you are a failure or have let yourself or your family down',
+  },
+  {
+    value: 7,
+    label:
+      'Trouble concentrating on things, such as reading the newspaper or watching television',
+  },
+  {
+    value: 8,
+    label:
+      'Moving or speaking so slowly that other people could have noticed. Or the opposite being so fidgety or restless that you have been moving around a lot more than usual',
+  },
+];
+
+export const PATH_QUESTION = [
+  { value: 'not_at_all', label: 'not_at_all' },
+  { value: 'several_days', label: 'several_days' },
+  { value: 'more_than_half_the_days', label: 'more_than_half_the_days' },
+  { value: 'nearly_every_day', label: 'nearly_every_day' },
 ];

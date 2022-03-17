@@ -10,19 +10,28 @@ import {
 } from "@chakra-ui/modal";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
-import {contactDataTypeOptions, PATH_TYPES, allCauses} from '../utils/constants'
+import {contactDataTypeOptions, PATH_TYPES, allCauses, allQuestions, PATH_QUESTION} from '../utils/constants'
 import SelectInput from './SelectInput/SelectInput'
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (txt: string, pathType: any, cause: any) => void;
+  onSubmit: (txt: string,question: any, pathType: any, cause: any) => void;
+  isQuestion: boolean
 };
 
-const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
+const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, isQuestion }) => {
   const [pathType, setPathType] = useState("");
   const [contactDataType, setContactDataType] = useState(null)
   const [cause, setCause] = useState("")
+  const [question, setQuestion] = useState(null)
+
+  const clearState = () => {
+    setPathType('');
+    setContactDataType(null);
+    setCause('')
+    setQuestion(null)
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -34,7 +43,7 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
           <SelectInput
             name="Select path type"
             value={pathType}
-            options={PATH_TYPES}
+            options={isQuestion ? PATH_QUESTION  : PATH_TYPES}
             onChange={setPathType}
             isMulti={false}
           />
@@ -43,6 +52,13 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
             value={contactDataType}
             options={contactDataTypeOptions}
             onChange={setContactDataType}
+            isMulti={false}
+          />
+          <SelectInput
+            name="Select question to check"
+            value={question}
+            options={allQuestions}
+            onChange={setQuestion}
             isMulti={false}
           />
           <SelectInput
@@ -57,7 +73,10 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit }) => {
           <Button
             color="blue.500"
             variant="solid"
-            onClick={() => onSubmit(contactDataType, pathType.value, cause)}
+            onClick={() => {
+              onSubmit(contactDataType, question, pathType.value, cause);
+              clearState()
+            }}
             disabled={!pathType}
           >
             Add
