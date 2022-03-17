@@ -155,8 +155,8 @@ export const allQuestions = [
 ];
 
 export const PATH_QUESTION = [
-  { value: 'not_at_all', label: 'not_at_all' },
-  { value: 'several_days', label: 'several_days' },
-  { value: 'more_than_half_the_days', label: 'more_than_half_the_days' },
-  { value: 'nearly_every_day', label: 'nearly_every_day' },
+  { value: 1, label: 'not_at_all' },
+  { value: 2, label: 'several_days' },
+  { value: 3, label: 'more_than_half_the_days' },
+  { value: 4, label: 'nearly_every_day' },
 ];

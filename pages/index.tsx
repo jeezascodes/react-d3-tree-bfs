@@ -8,7 +8,7 @@ import {
   TreeNodeDatum,
 } from "react-d3-tree/lib/types/common";
 import { v4 } from "uuid";
-import {contactDataTypeOptions, allCauses} from '../utils/constants'
+import {contactDataTypeOptions, allCauses, allQuestions} from '../utils/constants'
 
 const Tree = dynamic(() => import("react-d3-tree"), {
   ssr: false,
@@ -63,7 +63,7 @@ export default function Home() {
   const handleSubmit = (familyMemberName: any, question: any, pathType: any, cause: any) => {
     const newTree = bfs(node.attributes?.id, tree, {
       current_biomarker_check: familyMemberName?.value || 0,
-      current_question_check: question,
+      current_question_check: question?.value || null,
       attributes: {
         id: v4(),
         name: pathType
@@ -87,16 +87,24 @@ export default function Home() {
     const { nodeDatum } = customProps;
     const last_parent_name = contactDataTypeOptions?.filter(item => item.value == nodeDatum.parent)[0]?.label
     const biomarker_name = contactDataTypeOptions?.filter(item => item.value == nodeDatum.current_biomarker_check)[0].label
+    const question_name = allQuestions?.filter(item => item.value == nodeDatum.current_question_check)[0]?.label
     const cause_name = allCauses?.filter(item => item.value == nodeDatum.causes)[0]?.label
     const path = nodeDatum.attributes.name
     let textPosition = path == "below_reference" || path == "above_reference"  ? "-130" : "-120"
 
+    const formattedBiomarkerName =  biomarker_name == 'None' ? '' : biomarker_name
+    const formattedQuestionName =  question_name == 'None' ? '' : question_name
+
+    console.log(`nodeDatum.current_question_check`, nodeDatum.current_question_check)
+
+    console.log(`formattedBiomarkerName`, formattedBiomarkerName)
+    console.log(`formattedQuestionName`, formattedQuestionName)
 
     return (
       <g>
         <circle r="15" fill={"green"} onClick={() => click(nodeDatum)} />
         <text fill="black" strokeWidth="0.5" x="20" y="-5" className={`biomarkerName long_name`}>
-          {biomarker_name == 'None' ? '' : biomarker_name}
+          {formattedBiomarkerName || formattedQuestionName}
         </text>
         <text fill="black" strokeWidth="0.5" x="20" y="15" className="biomarkerName">
           {cause_name == 'None' ? '' : cause_name}
