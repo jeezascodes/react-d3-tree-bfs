@@ -8,7 +8,6 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {contactDataTypeOptions, PATH_TYPES, allCauses, allQuestions, PATH_QUESTION} from '../utils/constants'
 import SelectInput from './SelectInput/SelectInput'
@@ -53,6 +52,7 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, isQuestion }) =
             options={contactDataTypeOptions}
             onChange={setContactDataType}
             isMulti={false}
+            isDisabled={question && question.value !== 0}
           />
           <SelectInput
             name="Select question to check"
@@ -60,6 +60,7 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, isQuestion }) =
             options={allQuestions}
             onChange={setQuestion}
             isMulti={false}
+            isDisabled={contactDataType && contactDataType.value !== 0}
           />
           <SelectInput
             name="Select causes"

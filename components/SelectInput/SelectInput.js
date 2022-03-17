@@ -8,6 +8,7 @@ export default function SelectInput({
   onChange,
   options,
   isMulti = true,
+  isDisabled = false,
 }) {
   return (
     <div>
@@ -18,6 +19,7 @@ export default function SelectInput({
         onChange={onChange}
         options={options}
         isMulti={isMulti}
+        isDisabled={isDisabled}
       />
     </div>
   );
