@@ -9,10 +9,49 @@ import {
 } from "react-d3-tree/lib/types/common";
 import { v4 } from "uuid";
 import {contactDataTypeOptions, allCauses, allQuestions} from '../utils/constants'
+import { clone } from 'lodash';
 
 const Tree = dynamic(() => import("react-d3-tree"), {
   ssr: false,
 });
+
+export function removeBfs(
+  id: string,
+  tree: RawNodeDatum | RawNodeDatum[],
+  node: RawNodeDatum
+) {
+  console.log(`id`, id)
+  console.log(`node`, node)
+  const queue: RawNodeDatum[] = [];
+
+  queue.unshift(tree as RawNodeDatum);
+
+  while (queue.length > 0) {
+    const curNode = queue.pop();
+    console.log(`curNode`, curNode)
+
+    // if (curNode.attributes?.id === id) {
+    //   console.log(`exec`)
+    //   curNode.children = curNode.children.filter(item => item.current_biomarker_check == node.current_biomarker_check);
+
+    //   return { ...tree };
+    // }
+
+    if (curNode?.current_biomarker_check === node.parent) {
+      console.log(`exec`, curNode)
+      curNode.children = curNode.children.filter(item => item.current_biomarker_check !== node.current_biomarker_check);
+
+      return { ...tree };
+    }
+
+
+    const len = curNode.children.length;
+
+    for (let i = 0; i < len; i++) {
+      queue.unshift(curNode.children[i]);
+    }
+  }
+}
 
 export function bfs(
   id: string,
@@ -22,6 +61,8 @@ export function bfs(
   const queue: RawNodeDatum[] = [];
 
   queue.unshift(tree as RawNodeDatum);
+
+
 
   while (queue.length > 0) {
     const curNode = queue.pop();
@@ -40,6 +81,7 @@ export function bfs(
   }
 }
 
+
 export default function Home() {
   const [tree, setTree] = useState<RawNodeDatum | RawNodeDatum[]>({
     current_biomarker_check: 40,
@@ -57,8 +99,12 @@ export default function Home() {
   const close = () => setNode(undefined);
 
   const handleNodeClick = (datum: TreeNodeDatum) => {
+    console.log(`datum`, datum)
     setNode(datum);
   };
+
+
+  // console.log(`tree`, tree)
 
   const handleSubmit = (familyMemberName: any, question: any, pathType: any, cause: any) => {
     const newTree = bfs(node.attributes?.id, tree, {
@@ -79,6 +125,17 @@ export default function Home() {
 
     setNode(undefined);
   };
+
+  const handleRemove = () => {
+    const newTree = removeBfs(node.attributes.id, tree, node)
+    console.log(`newTree`, newTree)
+
+    if (newTree) {
+      setTree(newTree);
+    }
+
+    setNode(undefined);
+  }
 
   const renderRectSvgNode = (
     customProps: CustomNodeElementProps,
@@ -119,7 +176,6 @@ export default function Home() {
     );
   };
 
-  console.log(`tree`, tree)
 
   return (
     <Stack direction="row" spacing="md">
@@ -142,6 +198,7 @@ export default function Home() {
           onClose={close}
           isOpen={Boolean(node)}
           isQuestion={Boolean(node?.current_question_check)}
+          onRemove={handleRemove}
         />
       </Box>
     </Stack>

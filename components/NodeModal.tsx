@@ -17,9 +17,10 @@ type Props = {
   onClose: () => void;
   onSubmit: (txt: string,question: any, pathType: any, cause: any) => void;
   isQuestion: boolean
+  onRemove: any;
 };
 
-const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, isQuestion }) => {
+const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, isQuestion, onRemove }) => {
   const [pathType, setPathType] = useState("");
   const [contactDataType, setContactDataType] = useState(null)
   const [cause, setCause] = useState("")
@@ -71,6 +72,16 @@ const NodeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, isQuestion }) =
 
         </ModalBody>
         <ModalFooter>
+        <Button
+            color="blue.500"
+            variant="solid"
+            onClick={() => {
+              onRemove();
+              clearState()
+            }}
+          >
+            remove
+          </Button>
           <Button
             color="blue.500"
             variant="solid"
