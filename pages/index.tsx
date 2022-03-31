@@ -10,6 +10,7 @@ import {
 import { v4 } from "uuid";
 import {contactDataTypeOptions, allCauses, allQuestions} from '../utils/constants'
 import { clone } from 'lodash';
+const crypto = require('crypto');
 
 const Tree = dynamic(() => import("react-d3-tree"), {
   ssr: false,
@@ -176,6 +177,26 @@ export default function Home() {
     );
   };
 
+
+    
+    // A sample webhook coming from MetaMap
+    const WEBHOOK_PAYLOAD = {eventName: 'verification_expired', resource:'https://api.getmati.com/v2/verifications/6239fb002ab10e001d1e61a2', timestamp: '2022-03-22T17:07:00.774Z', flowId: '620d7b9ab9ff73001b3b0ee2'};
+    
+    const MERCHANT_SECRET = 'Cb21SVZVtREZezXF-zifqiCvKwiljFPQawgD4oEJwOghVFQP8hmmJn75u5ZV9hhqEHVnnPG31rbgMupoOTbjNA';
+    
+    // MetaMap hashes your webhook payload
+    const signature = crypto.createHmac('sha256', MERCHANT_SECRET).update(JSON.stringify(WEBHOOK_PAYLOAD)).digest('hex');
+    console.log('signature', signature);
+    
+    // function verify(signature, secret, payloadBody) {
+    //     let hash = crypto.createHmac('sha256', secret);
+    //     hash = hash.update(payloadBody).digest('hex');
+    //     return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(signature));
+    // }    
+    // let isValidPayload;
+    
+    // isValidPayload = verify(signature, MERCHANT_SECRET, JSON.stringify(WEBHOOK_PAYLOAD));
+    // console.log(isValidPayload);
 
   return (
     <Stack direction="row" spacing="md">

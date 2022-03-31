@@ -129,7 +129,7 @@ export const PATH_TYPES = [
 
 export const allQuestions = [
   { value: 0, label: 'None' },
-  { value: 1, label: 'Little interest or pleasure in doing things' },
+  { value: 1, label: 'Does the hero have B12 treatment' },
   { value: 2, label: 'Feeling down, depressed, or hopeless' },
   {
     value: 3,
@@ -155,8 +155,8 @@ export const allQuestions = [
 ];
 
 export const PATH_QUESTION = [
-  { value: 1, label: 'not_at_all' },
-  { value: 2, label: 'several_days' },
-  { value: 3, label: 'more_than_half_the_days' },
-  { value: 4, label: 'nearly_every_day' },
+  { value: 1, label: 'yes' },
+  { value: 2, label: 'no' },
+  // { value: 3, label: 'more_than_half_the_days' },
+  // { value: 4, label: 'nearly_every_day' },
 ];
